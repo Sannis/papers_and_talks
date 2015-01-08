@@ -1,0 +1,88 @@
+size 40 14
+
+!! Styles
+
+set arrowsize 0.5
+set arrowstyle filled
+
+set cap round
+
+set lwidth 0.07
+
+set font texcmss
+set hei 0.65
+
+ntl = 0.5
+
+!! Draw subs
+
+sub rtext x y a$ h
+    default h 0.65
+    rmove x y
+    set hei h
+    write a$
+    set hei 0.65
+    rmove -x -y
+end sub
+
+sub draw_title title$
+    amove 0 13
+    rtext 0.5 -0.15 title$ 1
+end sub
+
+sub draw_libeio_thread title$ y
+    set color gray40
+
+    amove 0 y
+    rtext 0.5 -0.15 title$
+
+    rmove 5 0
+
+    set lstyle 4
+    rline 34 0
+end sub
+
+sub draw_event_loop total_time$
+    set color blue
+
+    amove 0 5
+    rtext 0.5 -0.15 "Event loop, V8"
+
+    amove 5 5
+
+    set lstyle 1
+    marker fcircle 0.6
+    rtext 0.4 0.3 "init"
+    rline 2 0 arrow end
+
+    set lstyle 4
+    rline 32 0
+
+    rtext -0.8 -0.9 total_time$
+end sub
+
+sub draw_clients
+    set color gray40
+
+    amove 0 2
+    rtext 0.5 -0.15 "Client requests"
+
+    amove 5 2
+
+    set lstyle 4
+    rline 34 0
+end sub
+
+sub nexttickmove x
+    a = (x*x/4 - ntl*ntl)/2/ntl
+    r = a + ntl
+    phi = 180*asin(a/r)/pi
+
+    rmove x/2 a
+    arc r 180+phi -phi arrow end
+    rmove x/2 -a
+
+    set just center
+    rtext -x/2 -ntl-0.6 "nextTick" 0.55
+    set just left
+end sub

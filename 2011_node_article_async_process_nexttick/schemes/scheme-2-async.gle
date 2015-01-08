@@ -1,0 +1,64 @@
+include schemes.inc.gle
+
+! Title
+draw_title "Non-blocking I/O, small improvement"
+
+! Libeio thread 2
+draw_libeio_thread "Libeio thread 2" 11
+
+! Libeio thread 1
+draw_libeio_thread "Libeio thread 1" 8
+
+! Boot and event loop
+draw_event_loop "19"
+
+! Clients
+draw_clients
+
+! Request 1
+set color green
+
+amove 8 2
+
+set lstyle 1
+marker fcircle 0.6
+rline 1 3 arrow end
+rline 1 0 arrow end
+rline 0 3 arrow end
+rtext 1.35 0.3 "read"
+rline 4 0 arrow end
+rline 0 -3 arrow end
+rtext 0.4 0.3 "calc(1)"
+rline 3 0 arrow end
+rtext 0.4 0.3 "calc(2)"
+rline 3 0 arrow end
+rline 1 -3 arrow end
+marker cross 0.6
+
+rtext -0.3 -0.9 "13"
+
+! Request 2
+set color red
+
+amove 9 2
+
+set lstyle 1
+marker fcircle 0.6
+rline 1 3 arrow end
+rline 1 0 arrow end
+rline 0 6 arrow end
+rtext 1.35 0.3 "read"
+rline 4 0 arrow end
+set lstyle 4
+rline 5 0
+set lstyle 1
+rline 0 -6 arrow end
+rtext 0.4 0.3 "calc(1)"
+rline 3 0 arrow end
+rtext 0.4 0.3 "calc(2)"
+rline 3 0 arrow end
+rline 1 -3 arrow end
+marker cross 0.6
+
+rtext -0.3 -0.9 "18"
+

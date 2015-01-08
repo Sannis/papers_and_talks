@@ -1,0 +1,44 @@
+size 37 12
+
+set font texcmr hei 0.8
+
+begin graph
+  size 18 12
+  scale  auto
+  
+  data   "rps.dat"
+  
+  xtitle "File size, Kb"
+  ytitle "Requests per second"
+  
+  xaxis min 0.5 max 10.5
+  yaxis min 0 max 2000
+  
+  bar d1,d2,d3,d4 fill red,green,blue,skyblue
+end graph
+
+amove 19 0
+
+begin graph
+  size 18 12
+  scale  auto
+  
+  data   "rps.dat"
+  
+  xtitle "File size, Kb"
+  ytitle "Requests per second"
+  
+  xaxis min 0.5 max 14.5
+  yaxis log min 1 max 2000
+  
+  bar d1,d2,d3,d4 fill red,green,blue,skyblue
+end graph
+
+begin key
+  position tr
+  text "readFileSync.js"            fill red     hei 0.5
+  text "readFile.js"                fill green
+  text "readFile-and-sync-chain.js" fill blue
+  text "readFile-and-nextTick.js"   fill skyblue
+end key
+
