@@ -1,0 +1,23 @@
+\cleardoublepage
+\phantomsection
+\section*{Приложения}
+\addcontentsline{toc}{section}{Приложения}
+
+\setcounter{section}{0}
+\setcounter{subsection}{0}
+
+\renewcommand{\thesubsection}{П.\Asbuk{subsection}}
+
+\titleformat{\subsection}[block]{\bfseries\normalsize\raggedright}
+        {\thesubsection.}{1ex}{}
+
+\renewcommand{\theequation}{\thesubsection.\arabic{equation}}
+
+\input{tex/6.1_appendix_variations_xz}
+
+\input{tex/6.2_appendix_variations_rz}
+
+\input{tex/6.3_appendix_fourier}
+
+\input{tex/6.4_appendix_var_vs_fftw}
+

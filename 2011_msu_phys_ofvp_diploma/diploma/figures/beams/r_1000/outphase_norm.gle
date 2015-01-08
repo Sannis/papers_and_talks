@@ -1,0 +1,30 @@
+width = 10;
+height = 10;
+margin = 1.5;
+L = 2.5;
+
+size width+2*margin height+2*margin
+
+begin texpreamble
+  \usepackage[utf8]{inputenc}
+end texpreamble
+
+amove 0 0
+box width+2*margin height+2*margin nobox
+
+amove margin margin
+bitmap "outphase_norm.gif" width height
+
+begin graph
+  fullsize
+  size width height
+  
+  xaxis min -L max L hei 1 nticks 5
+  xticks lwidth 0.1 length 0.4 color white
+  xsubticks off
+  
+  yaxis min -L max L hei 1 nticks 5
+  yticks lwidth 0.1 length 0.4 color white
+  ysubticks off
+end graph
+

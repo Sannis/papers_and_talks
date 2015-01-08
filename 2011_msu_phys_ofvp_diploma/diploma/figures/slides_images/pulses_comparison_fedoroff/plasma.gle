@@ -1,0 +1,21 @@
+size 17 12
+
+begin texpreamble
+    \usepackage{cmap}
+    \usepackage[utf8]{inputenc}
+    \usepackage[T2A]{fontenc}
+    \usepackage[russian]{babel}
+    \usepackage{amsmath,amsfonts,amssymb}
+end texpreamble
+
+tex "Пиковая концентрация плазмы А, Ё, Й"
+
+begin graph
+    size 15 10
+    title "$Пиковая концентрация плазмы А, Ё, Й$"
+    xtitle "Время"
+    ytitle "Output"
+    data "../../pulses/comparison/data.txt" d1=c1,c2 d2=c1,c3 d3=c4,c5 d4=c4,c6
+    d1 line marker triangle color red
+end graph
+

@@ -1,0 +1,33 @@
+width = 20;
+height = 20;
+margin1 = 6;
+margin2 = 1;
+L = 2/32;
+
+size width+margin1+margin2 height+margin1+margin2
+
+begin texpreamble
+  \usepackage[utf8]{inputenc}
+end texpreamble
+
+amove 0 0
+box width+margin1+margin2 height+margin1+margin2 nobox
+
+amove margin1 margin1
+bitmap "#FILENAME#" width height
+
+begin graph
+  fullsize
+  size width height
+  
+  xtitle "t" hei 1.8
+  xaxis min -L max L hei 1.8 nticks 3 dticks 0.05
+  xticks lwidth 0.1 length -0.4 color black
+  xsubticks off
+  
+  ytitle "r" hei 1.8
+  yaxis min -L max L hei 1.8 nticks 3 dticks 0.05
+  yticks lwidth 0.1 length -0.4 color black
+  ysubticks off
+end graph
+

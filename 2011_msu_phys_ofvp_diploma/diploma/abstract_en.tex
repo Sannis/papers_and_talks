@@ -1,0 +1,58 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{diploma}
+
+\hypersetup{
+    pdftitle={Diploma thesis abstract},
+    pdfsubject={Self-focusing of laser beams with a regular transverse structure and comparative analysis of pulses filamentation at wavelengths 0.8 and 10 microns in the air},
+    pdfauthor={Oleg Efimov},
+    pdfkeywords={diploma, filamentation, laser, physics, optics, numerical methods, parallel programming, self-focusing, diffraction, dispersion, Schrödinger equation}
+}
+
+\begin{document}
+
+\newgeometry{left=1.5cm,right=1.5cm,top=2.5cm,bottom=2.5cm}
+
+\thispagestyle{empty}
+
+\begin{center}
+{\Large Diploma thesis abstract} \\
+
+\vspace{2ex}
+
+{\large Self-focusing of laser beams with a regular transverse structure and~comparative analysis of pulses filamentation at wavelengths 0.8~and~10~microns in the air} \\
+
+\vspace{2ex}
+
+{\large Efimov\,O.\,V.} \\
+\end{center}
+
+\vspace{2ex}
+
+The process of filaments genesis in the beams with a regular transverse structure having the~form
+of in-phase and out-of-phase amplitude perturbations in a medium with Kerr nonlinearity is numerically investigated.
+When the beam power is 6.6 times greater than the critical power of Gaussian beam self-focusing,
+in-phase modulation brings to one filament while out-of-phase modulation results in 4 filaments of 1.65 critical powers each.
+In the case of in-phase modulation filamentation length is 2.3 times less than in the case of out-of-phase modulation.
+The influence of random perturbations with a Gaussian spectral correlation function is simulated.
+It is shown that the initial pulse amplitude modulation with a relative fluctuation of up to 0.5
+doesn't appreciably affect the filaments formation pattern, but only slightly (up to 5--10\%) increases the filamentation length.
+
+A program, which allows numerical investigation of filamentation in case of axial-symmetric sub-picosecond pulses
+at the CO2 laser wavelength, is developed. A comparative analysis of the~filamentation of laser pulses at wavelengths
+of 800 nanometers and 10 microns in the air is carried out, taking into account the ionization of nitrogen and oxygen molecules in the air.
+Parameters of the filament and the plasma channel for these wavelengths are obtained for the pulse power 1.5 times greater than the critical power of self-focusing.
+It is shown that for the same exceeds ща the critical power and equal initial intensity the pulse at a wavelength of 10 microns causes
+a more wide plasma channel with a lower density of ions, than at the wavelength of 800 nm. Filamentation distance isn't much changes.
+
+Appendices to the diploma describe conservative differentially-difference schemes for nonlinear parabolic quasioptics equation
+for both one-dimensional and axial-symmetric cases. A comparative analysis of parallel numerical algorithms for solving quasioptics equation,
+namely the method based on the differentially-difference schemes and the Fourier method is performed.
+Their performance is~studied on the SKIF MSU "Chebyshev"\ supercomputer.
+
+\vspace{4ex}
+
+The scientific adviser \\
+сandidate of phys.-math. sciences \hfill docent S.\,A.\,Shlenov.
+
+\end{document}

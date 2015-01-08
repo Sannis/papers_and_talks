@@ -1,0 +1,20 @@
+# Ignore LaTeX logs and result *.pdf
+*.aux
+*.log
+*.out
+*.toc
+*.nav
+*.snm
+*.dvi
+*.ps
+*.bbl
+*.blg
+# Ignore archives
+*.zip
+*.tar.gz
+# Ignore final PDF
+diploma/diploma.pdf
+diploma/abstract_en.pdf
+diploma/abstract_ru.pdf
+diploma/current.pdf
+diploma/slides/slides.pdf

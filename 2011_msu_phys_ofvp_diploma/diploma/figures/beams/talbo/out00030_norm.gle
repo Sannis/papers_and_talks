@@ -1,0 +1,44 @@
+!
+! InP(001) STM images three images of the (2x4)/c(2x8) reconstruction
+! example of how to layout three STM images
+! By: V.P. LaBella vlabella@albany.edu
+! the eps output of this gle file was submitted directly
+! to the journal.  See Figure 2 in The Jour. Vac. Sci. & Technology A, Vol. 18 no. 4 pp. 1492 (2000)
+! be sure to get the stm.gle include from the GLE function repository
+!
+
+width = 10;
+height = 10;
+margin = 1.5;
+L = 5;
+
+size width+2*margin height+2*margin
+
+begin texpreamble
+  \usepackage[utf8]{inputenc}
+end texpreamble
+
+amove 0 0
+box width+2*margin height+2*margin nobox
+
+amove margin margin
+bitmap "out00030_norm.gif" width height
+
+begin graph
+  fullsize
+  size width height
+  
+  xaxis min -L max L hei 1 nticks 4 nofirst nolast
+  xticks lwidth 0.1 length 0.4 color white
+  xsubticks off
+  
+  yaxis min -L max L hei 1 nticks 4 nofirst nolast
+  yticks lwidth 0.1 length 0.4 color white
+  ysubticks off
+end graph
+
+
+
+
+
+

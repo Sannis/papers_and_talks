@@ -1,0 +1,144 @@
+\usepackage{cmap}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+%\usepackage{mathtext}
+\usepackage[english,russian]{babel}
+\hyphenation{nu-mer-i-cal-ly fi-la-men-ta-tion}
+\righthyphenmin=2
+\brokenpenalty=1000
+%\usepackage{times}
+%\renewcommand\large{\@setfontsize\large{15.5}{17}}
+%\renewcommand\Large{\@setfontsize\Large{16.5}{19}}
+\addtolength{\hoffset}{-1.7mm}
+\frenchspacing
+\usepackage{amssymb,amsmath,amsfonts,latexsym}
+\usepackage{hyphenat}
+\usepackage[unicode]{hyperref}
+\hypersetup{
+    pdfsubject={Самофокусировка лазерных импульсов с регулярной поперечной структурой и сравнительный анализ филаментации на длинах волн 0.8 и 10 мкм в воздухе},
+    pdfauthor={Ефимов О.В.},
+    pdfkeywords={диплом, филаментация, лазер, физика, оптика, вычислительные методы, параллельное программирование, самофокусировка, дифракция, дисперсия, уравнение квазиоптики, уравнение Шрёдингера},
+    pdfstartview={FitH},
+    colorlinks=true,
+    pdfborder=0 0 0,
+    linkcolor=blue,
+    citecolor=blue
+}
+\urlstyle{same}
+\usepackage{indentfirst}
+\usepackage{enumerate}
+\usepackage[labelsep=period]{caption}
+
+\usepackage[onehalfspacing]{setspace}
+
+\usepackage{color}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+\bibliographystyle{gost71uv}
+
+\usepackage{geometry}
+\geometry{top=2.5cm}
+\geometry{bottom=2.5cm}
+\geometry{left=3.5cm}
+\geometry{right=1cm}
+\marginparwidth = 2cm
+
+\renewcommand{\@oddhead}{\hfil \thepage \hfil}
+\renewcommand{\@oddfoot}{}
+
+\renewcommand{\@seccntformat}[1]{\csname the#1\endcsname.{\hspace{0.5em}}}
+\renewcommand{\@dotsep}{1}
+\renewcommand{\@biblabel}[1]{#1.}
+
+% According to GOST, sections should be called chapters in diploma
+% http://dxdy.ru/topic22967.html
+\usepackage{titlesec}
+\setcounter{tocdepth}{2}
+
+\titleformat{\section}[block]{\bfseries\large\raggedright}
+        {Глава~\arabic{section}.}{1ex}{}
+\titleformat{\subsection}[block]{\bfseries\normalsize\raggedright}
+        {\arabic{section}.\arabic{subsection}.}{1ex}{}
+
+%\titlespacing*{\section}      {0pt}{3.50ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+%\titlespacing*{\subsection}   {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+% ToC
+\usepackage[titles]{tocloft}
+
+\renewcommand{\cftsecpresnum}{Глава~}
+\renewcommand{\cftsecleader}{\bfseries\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsecaftersnum}{} %{.}
+\renewcommand{\cftsubsecaftersnum}{} %{.}
+
+\newlength{\zyvseclen}
+\settowidth{\zyvseclen}{\bfseries\cftsecpresnum\cftsecaftersnum}
+%\addtolength{\zyvseclen}{2mm}
+\addtolength{\cftsecnumwidth}{\zyvseclen}
+
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+
+\renewcommand{\theenumi}{\arabic{enumi}}
+\renewcommand{\labelenumi}{\arabic{enumi}).}
+\renewcommand{\theenumii}{\arabic{enumii}}
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}).}
+\renewcommand{\theenumiii}{\arabic{enumiii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}).}
+
+\let\stdnumberline\numberline
+\renewcommand*\numberline[1]{\stdnumberline{#1.}}
+
+\let\stdmarginpar\marginpar
+\renewcommand*{\marginpar}[1]{\stdmarginpar{\textcolor{red}{\tiny #1}}}
+
+\pdfcompresslevel=0
+
+\renewcommand{\@listI}{%
+\leftmargin=30pt
+\rightmargin=0pt
+\labelsep=10pt
+\labelwidth=20pt
+\itemindent=0pt
+\listparindent=0pt
+\topsep=0pt plus 2pt minus 4pt
+\partopsep=2pt plus 1pt minus 1pt
+\parsep=0pt plus 1pt
+\itemsep=\parsep}
+
+\numberwithin{equation}{subsection}
+\numberwithin{figure}{subsection}
+%\numberwithin{table}{subsection}
+
+% Tables and figures
+%\usepackage{booktabs}
+
+\def\capfigure{figure}
+\def\captable{table}
+\long\def\@makecaption#1#2{%
+    \vskip\abovecaptionskip
+        \ifx\@captype\capfigure
+            {\footnotesize #1.~#2}
+        \else
+            \centering
+            {\footnotesize #1.~#2}
+        \fi
+    \vskip\belowcaptionskip}
+
+\setlength\abovecaptionskip{2\p@}
+\setlength\belowcaptionskip{1\p@}
+
+% Sizes for two and three figure in a row
+\newcommand{\minipagewidthtwo}{0.44\linewidth}
+\newcommand{\minipagewidththree}{0.30\linewidth}
+\newcommand{\minipagewidthpadding}{0.15\linewidth}
+
+% For draft-related stuff
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{TODO:} \textit{#1}}}
+\newcommand{\skipthis}[1]{}
+
+
+% For debug
+%\usepackage{showkeys}

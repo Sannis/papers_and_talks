@@ -1,0 +1,287 @@
+\subsection{Вариационно-разностная схема для одномерного параболического уравнения}
+\label{subsec:AppVarXZ}
+
+Наиболее трудоёмкими, с точки зрения объёма вычисления, в цепочке уравнений
+метода расщепления по физическим факторам являются уравнения дифракции и дисперсии второго порядка.
+Для уменьшения объёма вычислений была использована неравномерная расчётная сетка.
+В качестве примера рассмотрим алгоритм построения разностной схемы для одномерного
+параболического уравнения, описывающего дисперсию второго порядка:
+
+\begin{equation}\label{AppVarNodim}
+\kappa\dfrac{\partial E}{\partial z} = \dfrac{\partial^2 E}{\partial t^2}
+\end{equation}
+
+Для построения разностной схемы воспользуемся вариационно-разностным методом Бубнова-Галеркина \cite{BahvalovChM}.
+Он состоит в том, что решение задачи (\ref{AppVarNodim}) эквивалентно поиску функции $E(t, z)$,
+для которой тождественно равен нулю функционал $J(E, V)$:
+
+\begin{equation}\label{AppVarNodimFunctional}
+J(E, V) = \int\limits_{-\infty}^{\infty} \left(\kappa\dfrac{\partial E}{\partial z} -
+          \dfrac{\partial^2 E}{\partial t^2}\right) \cdot V dt,
+\end{equation}
+
+\noindent где $V(t, z)$ "--- произвольная функция в классе искомых решений, то есть
+удовлетворяющая условию $\left. V(t, z)\right|_{t\rightarrow\pm\infty} = 0$.
+
+Интегрируя по частям второе слагаемое в (\ref{AppVarNodimFunctional}) и используя граничные
+условия при  $t\rightarrow\pm\infty$, перепишем функционал $J(E, V)$ в виде:
+
+\begin{equation}
+J(E, V) = \kappa\int\limits_{-\infty}^{\infty} \dfrac{\partial E}{\partial z} V dt +
+          \int\limits_{-\infty}^{\infty} \dfrac{\partial E}{\partial t}\dfrac{\partial V}{\partial t} dt.
+\end{equation}
+
+Введём расчётную сетку $\left\{ t_k \right\}$ такую, что $t_0 < t_1 < \ldots < t_N$ разбивают
+расчётную область $\left[t_0, t_N\right]$ на $N$ произвольных частей. На её границах положим
+$\left. E \right|_{t = t_0} = 0$, $\left. E \right|_{t = t_N} = 0$. Размер области, где
+рассматривается задача, берётся достаточно большим, чтобы условие равенства нулю поля на её границах
+было эквивалентно реальным граничным условиям. Значения функций
+$E(t, z)$ и $V(t, z)$ в узлах сетки будем обозначать $E_k \equiv E(t_k, z)$ и $V_k \equiv V(t_k, z)$
+соответственно. Представим функционал $J(E, V)$ в виде суммы интегралов на элементах сетки:
+
+\begin{equation}\label{AppVarWithSum}
+J(E, V) = \kappa \left[ \int\limits_{t_0}^{t_0+\frac{h_1}{2}} \dfrac{\partial E_0}{\partial z} V_0 dt +
+          \sum\limits_{k=1}^{N-1} \int\limits_{t_k-\frac{h_k}{2}}^{t_k+\frac{h_{k+1}}{2}} \dfrac{\partial E_k}{\partial z} V_k dt +
+          \int\limits_{t_N-\frac{h_N}{2}}^{t_N} \dfrac{\partial E_N}{\partial z} V_N dt \right] +
+          \sum\limits_{k=0}^{N-1} \int\limits_{t_k}^{t_{k+1}} \dfrac{\partial E}{\partial t}\dfrac{\partial V}{\partial t} dt.
+\end{equation}
+
+При этом для первого слагаемого, взятого в (\ref{AppVarWithSum}) в квадратные скобки, область
+интегрирования представляет собой интервал $\left(t_k-\frac{h_k}{2}, t_k+\frac{h_{k+1}}{2}\right)$,
+серединой которого является узел расчётной сетки. Аппроксимируем функции
+$E(t, z)$ и $V(t, z)$ на таких элементах сетки по методу прямоугольников:
+
+\begin{equation}\label{AppVarConstApprox}
+	\begin{array}{c}
+		E(t, z) = E_k \\
+		V(t, z) = V_k
+	\end{array},
+	\text{ где } t \in \left(t_k-\frac{h_k}{2}, t_k+\frac{h_{k+1}}{2}\right)
+\end{equation}
+
+В последнем слагаемом выражения (\ref{AppVarWithSum})  область  интегрирования представляет собой
+интервал $\left(t_k, t_{k+1}\right)$ между двумя узлами сетки. Для таких ячеек введём
+линейную аппроксимацию амплитуды поля $E$ и функции $V$ между узлами:
+
+\begin{equation}\label{AppVarLinearApprox}
+	\begin{array}{c}
+		E(t, z) = A_1(z) \cdot t + B_1(z) \\
+		V(t, z) = A_2(z) \cdot t + B_2(z)
+	\end{array},
+	\text{ где } t \in \left(t_k, t_{k+1}Ъ\right)
+\end{equation}
+
+Коэффициенты $A_1, B_1, A_2, B_2$ в (\ref{AppVarLinearApprox}) определяются значениями функций $E_k$ и
+$V_k$ на границах ячейки. В произвольной k-ой ячейке поле E и функция V между узлами выражаются
+через значения в узлах следующим образом:
+
+\begin{equation}\label{AppVarEApprox}
+E(t, z) = \frac{E_{k+1}(z) - E_k(z)}{h_{k+1}}(t - t_k) + E_k(z) = \frac{\Delta E_k}{h_{k+1}}(t - t_k) + E_k(z)
+\end{equation}
+
+\begin{equation}\label{AppVarVApprox}
+V(t, z) = \frac{V_{k+1}(z) - V_k(z)}{h_{k+1}}(t - t_k) + V_k(z) = \frac{\Delta V_k}{h_{k+1}}(t - t_k) + V_k(z)
+\end{equation}
+
+Различная аппроксимация функций $E(t, z)$ и $V(t, z)$ в слагаемых формулы (\ref{AppVarWithSum}) оправдывается тем,
+что в этом случае достигается одинаковая зависимость от $x$ во всех подынтегральных выражениях, что соответствует
+одному порядку аппроксимации.
+
+Подставив (\ref{AppVarEApprox}) и (\ref{AppVarVApprox}) в (\ref{AppVarWithSum}) и учитывая (\ref{AppVarConstApprox}),
+получим функционал $J(E, V)$ в виде:
+
+\begin{equation}\label{AppVarWithSumApprox}
+J(E, V) = \kappa \left[ \int\limits_{t_0}^{t_0+\frac{h_1}{2}} E'_0 V_0 dt +
+          \sum\limits_{k=1}^{N-1} \int\limits_{t_k-\frac{h_k}{2}}^{t_k+\frac{h_{k+1}}{2}} E'_k V_k dt +
+          \int\limits_{t_N-\frac{h_N}{2}}^{t_N} E'_N V_N dt \right] +
+          \sum\limits_{k=0}^{N-1} \int\limits_{t_k}^{t_{k+1}} \frac{\Delta E_k}{h_{k+1}} \frac{\Delta V_k}{h_{k+1}} dt,
+\end{equation}
+
+\noindent где штрихом обозначено дифференцирование по $z$. Вычислим интегралы в (\ref{AppVarWithSumApprox}) и~соберём члены с одинаковыми $V_k$.
+Для этого введем следующие обозначения:
+
+\begin{equation}\label{AppVarI1}
+I_1 \equiv \int\limits_{t_0}^{t_0+\frac{h_1}{2}} E'_0 V_0 dt +
+          \sum\limits_{k=1}^{N-1} \int\limits_{t_k-\frac{h_k}{2}}^{t_k+\frac{h_{k+1}}{2}} E'_k V_k dt +
+          \int\limits_{t_N-\frac{h_N}{2}}^{t_N} E'_N V_N dt,
+\end{equation}
+
+\begin{equation}\label{AppVarI2}
+I_2 \equiv \sum\limits_{k=0}^{N-1} \int\limits_{t_k}^{t_{k+1}} \frac{\Delta E_k}{h_{k+1}} \frac{\Delta V_k}{h_{k+1}} dt.
+\end{equation}
+
+Тогда (\ref{AppVarWithSumApprox}) можно переписать в виде:
+
+\begin{equation}\label{AppVarI1I2}
+J(E, V) = \kappa I_1 + I_2,
+\end{equation}
+
+Вычислим $I_1$:
+
+\begin{equation}\label{AppVarI1Exp}
+\begin{array}{c}
+I_1 = \left. E'_0 V_0 \right|_{t_0}^{t_0+\frac{h_1}{2}} +
+      \sum\limits_{k=1}^{N-1} \left. E'_k V_k \right|_{t_k-\frac{h_k}{2}}^{t_k+\frac{h_{k+1}}{2}} +
+      \left. E'_N V_N \right|_{t_N-\frac{h_N}{2}}^{t_N} = \\[1em]
+
+    = \frac{h_1}{2} E'_0 V_0 +
+      \sum\limits_{k=1}^{N-1} \frac{h_{k+1} + h_k}{2} E'_k V_k +
+      \frac{h_N}{2} E'_N V_N
+\end{array}
+\end{equation}
+
+Вычислим $I_2$:
+
+\begin{equation}
+I_2 = \sum\limits_{k=0}^{N-1} \left. \frac{\Delta E_k \Delta V_k}{h_{k+1}^2} \right|_{t_k}^{t_{k+1}} =
+      \sum\limits_{k=0}^{N-1} \frac{\Delta E_k}{h_{k+1}} (V_{k+1} - V_k) =
+      \sum\limits_{k=0}^{N-1} \frac{\Delta E_k}{h_{k+1}} V_{k+1} -
+      \sum\limits_{k=0}^{N-1} \frac{\Delta E_k}{h_{k+1}} V_k
+\end{equation}
+
+В первой сумме этого выражения заменим индекс суммирования $k \rightarrow k - 1$:
+
+\begin{equation}\label{AppVarI2Exp}
+\begin{array}{c}
+I_2 = \sum\limits_{k=1}^{N} \frac{\Delta E_{k-1}}{h_k} V_k -
+      \sum\limits_{k=0}^{N-1} \frac{\Delta E_k}{h_{k+1}} V_k =
+      - \left( \sum\limits_{k=0}^{N-1} \frac{\Delta E_k}{h_{k+1}} V_k -
+      \sum\limits_{k=1}^{N} \frac{\Delta E_{k-1}}{h_k} V_k \right) = \\[1em]
+
+   =  - \left( \frac{\Delta E_0}{h_0} V_0 + \sum\limits_{k=1}^{N-1} \frac{\Delta E_k}{h_{k+1}} V_k -
+      \sum\limits_{k=1}^{N-1} \frac{\Delta E_{k-1}}{h_k} V_k - \frac{\Delta E_{N-1}}{h_N} V_N \right) = \\[1em]
+
+   =  - \left( \frac{\Delta E_0}{h_0} V_0 + \sum\limits_{k=1}^{N-1} \left( \frac{E_{k+1} - E_k}{h_{k+1}} -
+      \frac{E_k - E_{k-1}}{h_k} \right) V_k - \frac{\Delta E_{N-1}}{h_N} V_N \right) = \\[1em]
+
+   =  - \left( \frac{\Delta E_0}{h_0} V_0 + \sum\limits_{k=1}^{N-1} \left( \frac{E_{k+1}}{h_{k+1}} -
+      \left(\frac{1}{h_{k+1}} + \frac{1}{h_k}\right)E_k + \frac{E_{k-1}}{h_k} \right) V_k - \frac{\Delta E_{N-1}}{h_N} V_N \right)
+\end{array}
+\end{equation}
+
+Подставим выражения (\ref{AppVarI1Exp}) и (\ref{AppVarI2Exp}) для $I_1$ и $I_2$ в (\ref{AppVarI1I2}):
+
+\begin{equation}
+\begin{array}{c}
+J(E, V) = \kappa \left( \frac{h_1}{2} E'_0 V_0 +
+                        \sum\limits_{k=1}^{N-1} \frac{h_{k+1} + h_k}{2} E'_k V_k +
+                        \frac{h_N}{2} E'_N V_N \right) - \\[1em]
+
+      - \left( \frac{\Delta E_0}{h_0} V_0 + \sum\limits_{k=1}^{N-1} \left( \frac{E_{k+1}}{h_{k+1}} -
+        \left(\frac{1}{h_{k+1}} + \frac{1}{h_k}\right)E_k + \frac{E_{k-1}}{h_k} \right) V_k - \frac{\Delta E_{N-1}}{h_N} V_N \right)
+\end{array}
+\end{equation}
+
+Собирая члены при одинаковых $V_k$ получим для $J(E, V)$ следующее выражение:
+
+\begin{equation}
+\begin{array}{c}
+J(E, V) = \left( \kappa \frac{h_1}{2} E'_0 - \frac{\Delta E_0}{h_1} \right) \cdot V_0 + \\[1em]
+
+        + \sum\limits_{k=1}^{N-1} \left( \kappa \frac{h_{k+1} + h_k}{2}E'_k - \left( \frac{E_{k+1}}{h_{k+1}} -
+          \left(\frac{1}{h_{k+1}} + \frac{1}{h_k}\right)E_k + \frac{E_{k-1}}{h_k} \right) \right) \cdot V_k + \\[1em]
+
+        + \left( \kappa \frac{h_N}{2} E'_N + \frac{\Delta E_{N-1}}{h_N} \right) \cdot V_N
+\end{array}
+\end{equation}
+
+Функционал $J(E, V)$ обращается в нуль в том случае, если равны нулю коэффициенты при всех $V_k$,
+поскольку значения $V_k$ в узлах сетки произвольны. Отсюда следует система уравнений относительно
+значений поля $E_k$ в узлах сетки:
+
+\begin{equation}\label{AppVarFinalSystem}
+\left\{
+\begin{array}{ll}
+	\kappa \dfrac{h_1}{2} \dfrac{\partial E_0(z)}{\partial z} = \dfrac{E_1(z) - E_0(z)}{h_1}, & \mbox{ при } k = 0; \\[1em]
+
+	\kappa \dfrac{h_{k+1} + h_k}{2} \dfrac{\partial E_k(z)}{\partial z} = \dfrac{E_{k+1}(z)}{h_{k+1}} -
+    \left(\dfrac{1}{h_{k+1}} + \dfrac{1}{h_k}\right)E_k(z) + \dfrac{E_{k-1}(z)}{h_k}, & \mbox{ при } k = 1 \ldots N-1; \\[1em]
+
+	\kappa \dfrac{h_N}{2} \dfrac{\partial E_N(z)}{\partial z} = - \dfrac{E_N(z) - E_{N-1}(z)}{h_N}, & \mbox{ при } k = N.
+\end{array}
+\right.
+\end{equation}
+
+Таким образом, вариационная формулировка исходной задачи (\ref{AppVarNodim}) позволила получить
+систему дифференциально-разностных уравнений относительно комплексной амплитуды поля $E_k(z)$
+в узлах сетки. При этом вариационно-разностным методом однозначно определены коэффициенты
+полученных уравнений для неоднородной сетки с~произвольным шагом $h_k$. Полученная схема консервативна,
+поскольку минимизируется функционал, являющийся квадратичной функцией поля $E_k$.
+
+Заметим, что в частном случае однородной сетки $h_k \equiv h$ правая часть построенной схемы
+сводится к обычной разностной аппроксимации второй производной по координате $t$.
+
+Ранее вариационно-разностный метод построения численной схемы для решения задачи о самофокусировке
+применялся в \cite{EgorovKandidovLedenev1982}. В этой работе шаг по поперечным координатам считался постоянным и
+использовалась более сложная аппроксимация поля на ячейках сетки, однако это привело к громоздкой
+системе уравнений, относительно значений поля в узлах сетки, что потребовало последующих упрощений
+при численном решении полученной системы.
+
+Для интегрирования по оси z применим процедуру Кранка-Николсона \cite{KalitkinChM}. Тогда (\ref{AppVarFinalSystem}) примет вид:
+
+\begin{equation}\label{AppVarCrankNicolson}
+\left\{
+\begin{array}{l}
+	\kappa \dfrac{h_1}{2} \dfrac{E_0^{s+1} - E_0^s}{\Delta z} =
+	\dfrac{1}{2}\left(\dfrac{E_1^{s+1} - E_0^{s+1}}{h_1}\right) +
+	\dfrac{1}{2}\left(\dfrac{E_1^s - E_0^s}{h_1}\right)\\[1em]
+
+	\begin{array}{lll}
+	\kappa \dfrac{h_{k+1} + h_k}{2} \dfrac{E_k^{s+1} - E_k^s}{\Delta z} & = &
+	      \dfrac{1}{2}\left(\dfrac{E_{k+1}^{s+1}}{h_{k+1}} - \left(\dfrac{1}{h_{k+1}} +
+	      \dfrac{1}{h_k}\right)E_k^{s+1} + \dfrac{E_{k-1}^{s+1}}{h_k}\right) + \\[1em]
+	& + & \dfrac{1}{2}\left(\dfrac{E_{k+1}^s}{h_{k+1}} - \left(\dfrac{1}{h_{k+1}} +
+	      \dfrac{1}{h_k}\right)E_k^s + \dfrac{E_{k-1}^s}{h_k}\right)
+	\end{array}\\[2.5em]
+
+	\kappa \dfrac{h_N}{2} \dfrac{E_N^{s+1} - E_N^s}{\Delta z} =
+	- \dfrac{1}{2}\left(\dfrac{E_N^{s+1} - E_{N-1}^{s+1}}{h_N}\right) -
+	\dfrac{1}{2}\left(\dfrac{E_N^s - E_{N-1}^s}{h_N}\right)
+\end{array}
+\right.
+\end{equation}
+
+\noindent где $\Delta z$ "--- шаг по оси $z$, $s$ "--- номер шага по оси $z$.
+
+Система (\ref{AppVarCrankNicolson}) позволяет определить значения $E_{s+1}$, зная значения $E_s$ на предыдущем шаге.
+Для этого необходимо разрешить систему (\ref{AppVarCrankNicolson}) относительно $E_{s+1}$. Эта систему является
+линейной алгебраической системой с трёхдиагональной матрицей, следовательно,
+для её решения применим метод прогонки \cite{KalitkinChM}.
+Для применения этого метода приведём систему к виду:
+
+\begin{equation}\label{AppVarShuttle}
+\left\{
+\begin{array}{l}
+	A_k E_{k-1}^{s+1} - C_k E_k^{s+1} + B_k E_{k+1}^{s+1} = - F_k, \mbox{ где } k = 1 \ldots N-1;\\[1em]
+	E_0^{s+1} = \alpha \cdot E_1^{s+1} + \beta, \; E_N^{s+1} = \gamma \cdot E_{N-1}^{s+1} + \delta
+\end{array}
+\right.
+\end{equation}
+
+Сравним (\ref{AppVarShuttle}) с (\ref{AppVarCrankNicolson}) и найдём прогонные коэффициенты:
+
+\begin{equation}
+\left\{
+\begin{array}{l}
+	A_k = \dfrac{1}{h_k}, B_k = \dfrac{1}{h_{k+1}},
+	C_k = A_k + B_k + \dfrac{\kappa}{\Delta z}\left( h_{k+1} + h_k \right), \\[1em]
+	F_k = \dfrac{E_{k+1}^s}{h_{k+1}} - \left(\left(\dfrac{1}{h_{k+1}} + \dfrac{1}{h_k}\right) -
+	\dfrac{\kappa}{\Delta z}\left( h_{k+1} + h_k \right)\right)E_k^s + \dfrac{E_{k-1}^s}{h_k}, \\[1em]
+	\alpha = \dfrac{1}{1+\frac{h_1^2\kappa}{\Delta z}}, \;
+	\beta = \dfrac{E_1^s - \left(1-\frac{h_1^2\kappa}{\Delta z}\right)E_0^s}{1+\frac{h_1^2\kappa}{\Delta z}}, \\[1em]
+	\gamma = \dfrac{1}{1+\frac{h_N^2\kappa}{\Delta z}}, \;
+	\delta = \dfrac{E_{N-1}^s - \left(1-\frac{h_N^2\kappa}{\Delta z}\right)E_N^s}{1+\frac{h_N^2\kappa}{\Delta z}}.
+\end{array}
+\right.
+\end{equation}
+
+Отсюда видно, что условия устойчивости метода прогонки (\cite{KalitkinChM}) выполнены:
+\begin{equation}\label{AppVarShuttleConditions}
+|A_k|, |B_k|,  |C_k| > 0; \; |C_k| \geq |A_k| + |B_k|; \; 0 \leq \alpha < 1; \; 0 \leq \gamma < 1;
+\end{equation}
+
+Исследование на устойчивость численной схемы (\ref{AppVarCrankNicolson}) в случае неравномерного шага
+не представляется возможным. Но в случае постоянного шага такой анализ провести можно. В этом случае
+построенная схема перейдёт в стандартную схему Кранка-Николсона. Как известно, эта схема является
+абсолютно устойчивой, то есть её устойчивость не зависит от выбора величины шагов $h$ и $\Delta z$.
+

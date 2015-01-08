@@ -1,0 +1,49 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{diploma}
+
+\hypersetup{
+    pdftitle={Дипломная работа}
+}
+
+%----------------------------------------------------------------
+\begin{document}
+
+% Титульный лист на русском языке
+\include{tex/0_titlepage}
+
+\setcounter{page}{2}
+
+% Аннотация в самом тексте диплома только на русском
+\include{tex/0_abstract_ru}
+
+% Содержание
+\renewcommand{\contentsname}{Оглавление}
+\tableofcontents
+
+% Введение
+\include{tex/1_overview}
+
+% Глава 1
+\include{tex/2_model}
+
+% Глава 2
+\include{tex/3_section_beams}
+
+% Глава 3
+\include{tex/4_section_pulses}
+
+% Выводы
+\include{tex/5_conclusions}
+
+% Список литературы
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{section}{Список литературы}
+\bibliography{diploma}
+
+% Приложения
+\include{tex/6_appendices}
+
+\end{document}
+

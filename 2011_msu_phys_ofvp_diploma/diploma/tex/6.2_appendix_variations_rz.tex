@@ -1,0 +1,159 @@
+\subsection{Вариационно-разностная схема для случая цилиндрических координат}
+\label{subsec:AppVarRZ}
+
+В предыдущем разделе было показано, как с помощью вариационного метода построить
+дифференциально-разностное уравнение для решения одномерного параболического уравнения,
+которое описывает дисперсию второго порядка и одномерную дифракцию. В случае, если нужно
+рассчитать распространение двумерного пучка или~импульса, задачу можно решить двумя способами: последовательно
+решив одномерное уравнение для координат $x$ и $y$, либо сделать замену переменных с использованием
+цилиндрических координат и построить разностную схему для получившегося уравнения. Для упрощения вычислений
+в предположении аксиально-симметричного пучка лучше использовать второй способ.
+
+Запишем параболическое уравнение в цилиндрических координатах, учитывая что~$E$ не~зависит от угловой координаты $\varphi$:
+
+\begin{equation}\label{AppVarRNodim}
+\kappa\dfrac{\partial E}{\partial z} = \dfrac{1}{r}\dfrac{\partial}{\partial r}\left( r \dfrac{\partial E}{\partial r} \right)
+\end{equation}
+
+Метод построения вариационно-разностной схемы аналогичен методу построения для одномерного уравнения, описанному в \ref{subsec:AppVarXZ},
+и был впервые рассмотрен в \cite{Dyshko1968}. Используя этот метод, получим схему Кранка-Николсона
+для решения уравнения (\ref{AppVarRNodim}) на~неоднородной по радиальной координате сетке в области $r \in \left[0, R\right]$.
+
+Учитывая физические особенности задачи, будем считать, что $E(r, z) \equiv 0$ для $r \geq R$. Следовательно,
+начальные и граничные условия выглядят следующим образом:
+
+\begin{equation}
+\left\{
+\begin{array}{l}
+	E(r, z = 0) = E_{initial}(r) \\[1em]
+	E(r, z) \mbox{ ограничено при } r \rightarrow 0 \\[1em]
+	E(r = R, z) = 0
+\end{array}
+\right.
+\end{equation}
+
+Решение задачи (\ref{AppVarRNodim}) эквивалентно поиску функции $E(r, z)$,
+для которой тождественно равен нулю функционал $J(E, V)$:
+
+\begin{equation}\label{AppVarRNodimFunctional}
+J(E, V) = \int\limits_{0}^{R} \left(\kappa\dfrac{\partial E}{\partial z} -
+          \dfrac{1}{r}\dfrac{\partial}{\partial r}\left(r \dfrac{\partial E}{\partial r}\right)\right) V r dr,
+\end{equation}
+
+\noindent где $V(r)$ "--- произвольная функция в классе искомых решений, то есть удовлетворяющая условию $\left. V(r)\right|_{r = R} = 0$.
+Интегрируя по частям второе слагаемое в (\ref{AppVarRNodimFunctional}) и используя граничные условия для $V(r)$,
+перепишем функционал $J(E, V)$ в виде:
+
+\begin{equation}
+J(E, V) = \kappa \int\limits_{0}^{R} \dfrac{\partial E}{\partial z} V r dr +
+          \int\limits_{0}^{R}\dfrac{\partial E}{\partial r}\dfrac{\partial V}{\partial r} r dr,
+\end{equation}
+
+Введём расчётную сетку $\left\{ r_k \right\}$ такую, что $0 = r_0 < r_1 < \ldots < r_N = R$ разбивают
+расчётную область $\left[0, R\right]$ на $N$ произвольных частей. Значение функций $E(r, z)$ и $V(r)$
+в узлах сетки будем обозначать $E_k^s = E(r_k, z_s)$ и $V_k = V(r_k)$ соответственно. Тогда функционал
+$J(E, V)$ можно представить в виде суммы интегралов на элементах сетки:
+
+\begin{equation}\label{AppVarRNodimSum}
+J(E, V) = \kappa \sum\limits_{k=0}^{N-1} \int\limits_{r_k}^{r_{k+1}} \dfrac{\partial E}{\partial z} V r dr +
+          \sum\limits_{k=0}^{N-1} \int\limits_{r_k}^{r_{k+1}}\dfrac{\partial E}{\partial r}\dfrac{\partial V}{\partial r} r dr,
+\end{equation}
+
+Для получения схемы Кранка-Николсона линейно аппроксимируем функции $E(r, z)$ и $V(r)$ на элементах сетки:
+
+\begin{equation}
+	\begin{array}{lll}
+		E(r, z) & = & E_k^s + \dfrac{E_{k+1}^s-E_k^s}{r_{k+1}-r_k}(r-r_k) + \dfrac{E_k^{s+1}-E_k^s}{z_{s+1}-z_s}(z-z_s) + \\[1em]
+		        & + & \dfrac{E_{k+1}^{s+1}-E_k^{s+1}-E_{k+1}^s+E_k^s}{(r_{k+1}-r_k)(z_{s+1}-z_s)}(r-r_k)(z-z_s) \\[1em]
+
+		   V(r) & = & V_k + \dfrac{V_{k+1}-V_k}{r_{k+1}-r_k}(r-r_k)
+	\end{array}
+\end{equation}
+
+При такой аппроксимации подынтегральные выражения в (\ref{AppVarRNodimSum}) запишутся в виде:
+
+\begin{equation}
+	\begin{array}{lll}
+		\dfrac{\partial E(r, z_{s+\frac{1}{2}})}{\partial z} V(r) & = & \left(
+		\dfrac{E_k^{s+1}-E_k^s}{z_{s+1}-z_s} + \left( \dfrac{E_{k+1}^{s+1}-E_{k+1}^s}{z_{s+1}-z_s} -
+		\dfrac{E_k^{s+1}-E_k^s}{z_{s+1}-z_s} \right) \dfrac{r-r_k}{r_{k+1}-r_k} \right) V(r) \\[1em]
+
+		\dfrac{\partial E(r, z_{s+\frac{1}{2}})}{\partial r} \dfrac{\partial V(r)}{\partial r} & = & \dfrac{1}{2} \left(
+		\dfrac{E_{k+1}^{s+1}-E_k^{s+1}}{r_{k+1}-r_k} + \dfrac{E_{k+1}^s-E_k^s}{r_{k+1}-r_k} \right)
+		\dfrac{V_{k+1}-V_k}{r_{k+1}-r_k}
+	\end{array}
+\end{equation}
+
+Элементы сетки представляют из себя концентрические кольца. Подставим аппроксимации для $E(r, z)$ и $V(r)$ в интегралы из (\ref{AppVarRNodimSum}) и проинтегрируем:
+
+\begin{equation}\label{AppVarRI1}
+\sum\limits_{k=0}^{N-1} \int\limits_{r_k}^{r_{k+1}} \dfrac{\partial E}{\partial z} V r dr =
+\dfrac{r_1^2}{3}\dfrac{E_0^{s+1}-E_0^s}{z_{s+1}-z_s} V_0 +
+\sum\limits_{k=1}^{N-1} \dfrac{r_{k+1}^2 + r_k(r_{k+1}-r_{k-1})-r_{k-1}^2}{3}\dfrac{E_k^{s+1}-E_k^s}{z_{s+1}-z_s} V_k
+\end{equation}
+
+\begin{equation}\label{AppVarRI2}
+	\begin{array}{l}
+		\sum\limits_{k=0}^{N-1} \int\limits_{r_k}^{r_{k+1}}\dfrac{\partial E}{\partial r}\dfrac{\partial V}{\partial r} r dr =
+		-\dfrac{E_1^{s+1}-E_0^{s+1}+E_1^s-E_0^s}{2} V_0 -\\[1em]
+		-\sum\limits_{k=1}^{N-1}\left( \dfrac{r_{k+1}+r_k}{r_{k+1}-r_k}\dfrac{E_{k+1}^{s+1}+E_{k+1}^s}{2} -
+		\left(\dfrac{r_{k+1}+r_k}{r_{k+1}-r_k} + \dfrac{r_k+r_{k-1}}{r_k-r_{k-1}} \right)\dfrac{E_k^{s+1}+E_k^s}{2} + \right. \\[1em]
+		\left. + \dfrac{r_k+r_{k-1}}{r_k-r_{k-1}}\dfrac{E_{k-1}+^{s+1}+E_{k-1}^s}{2}\right) V_k
+	\end{array}
+\end{equation}
+
+Подставляя (\ref{AppVarRI2}) в (\ref{AppVarRNodimSum}) получим равенство:
+
+\begin{equation}
+\begin{array}{l}
+\kappa\dfrac{r_1^2}{3}\dfrac{E_0^{s+1}-E_0^s}{z_{s+1}-z_s} V_0 +
+\kappa\sum\limits_{k=1}^{N-1}\dfrac{r_{k+1}^2 + r_k(r_{k+1}-r_{k-1})-r_{k-1}^2}{3}\dfrac{E_k^{s+1}-E_k^s}{z_{s+1}-z_s} V_k - \\[1em]
+-\dfrac{E_1^{s+1}-E_0^{s+1}+E_1^s-E_0^s}{2} V_0 -\\[1em]
+-\sum\limits_{k=1}^{N-1}\left( \dfrac{r_{k+1}+r_k}{r_{k+1}-r_k}\dfrac{E_{k+1}^{s+1}+E_{k+1}^s}{2} -
+\left(\dfrac{r_{k+1}+r_k}{r_{k+1}-r_k} + \dfrac{r_k+r_{k-1}}{r_k-r_{k-1}} \right)\dfrac{E_k^{s+1}+E_k^s}{2} + \right. \\[1em]
+\left. + \dfrac{r_k+r_{k-1}}{r_k-r_{k-1}}\dfrac{E_{k-1}^{s+1}+E_{k-1}^s}{2}\right) V_k \equiv 0
+\end{array}
+\end{equation}
+
+Поскольку функция $V(r)$ "--- произвольная, то это равенство должно выполняться при любых значениях $V_k$.
+Полагая равными нулю все $V_k$, кроме $V_0$, потом все, кроме $V_0$ и $V_1$, и так далее до $V_{N-1}$, получим систему уравнений:
+
+\begin{equation}\label{AppVarRFinalSystem}
+\left\{
+\begin{array}{l}
+	\kappa \dfrac{E_0^{s+1} - E_0^s}{\Delta z} = \dfrac{3}{r_1^2} \dfrac{E_1^{s+1}-E_0^{s+1}+E_1^s-E_0^s}{2}, \\[1em]
+
+	\kappa \dfrac{E_k^{s+1} - E_k^s}{\Delta z} = \dfrac{3}{r_{k+1}^2 + r_k(r_{k+1}-r_{k-1})-r_{k-1}^2}\left(
+	\dfrac{r_{k+1}+r_k}{r_{k+1}-r_k}\dfrac{E_{k+1}^{s+1}+E_{k+1}^s}{2} - \right.\\[1em]
+	- \left(\dfrac{r_{k+1}+r_k}{r_{k+1}-r_k} + \dfrac{r_k+r_{k-1}}{r_k-r_{k-1}} \right)\dfrac{E_k^{s+1}+E_k^s}{2} +
+    \left. + \dfrac{r_k+r_{k-1}}{r_k-r_{k-1}}\dfrac{E_{k-1}^{s+1}+E_{k-1}^s}{2}\right), \\[1em]
+
+	E_N^{s+1} = 0,
+\end{array}
+\right.
+\end{equation}
+
+\noindent где $\Delta z = (z_{s+1} - z_s)$ "--- шаг по оси $z$, а $k = 1, \ldots, N-1$.
+
+Для того, чтобы применить метод прогонки при решении этой системы уравнений, приведём её к виду (\ref{AppVarShuttle}):
+
+\begin{equation}
+\left\{
+\begin{array}{l}
+	A_k = \dfrac{r_k+r_{k-1}}{r_k-r_{k-1}}, \; B_k =\dfrac{r_{k+1}+r_k}{r_{k+1}-r_k}, \\[1em]
+	C_k = A_k + B_k + \dfrac{2\kappa}{ \Delta z}\left( r_{k+1}^2 + r_k(r_{k+1}-r_{k-1})-r_{k-1}^2 \right), \\[1em]
+	F_k = A_k E_{k-1}^s +  B_k E_{k+1}^s -
+	      \left(A_k + B_k - \dfrac{2\kappa}{ \Delta z}\left( r_{k+1}^2 + r_k(r_{k+1}-r_{k-1})-r_{k-1}^2 \right)\right) E_k^s, \\[1em]
+	\alpha = \dfrac{1}{1+\frac{2\kappa r_1^2}{3\Delta z}}, \;
+	\beta = \dfrac{E_1^s - \left(1-\frac{2\kappa r_1^2}{3\Delta z}\right)E_0^s}{1+\frac{2\kappa r_1^2}{3\Delta z}}, \\[2em]
+	\gamma = 0, \;
+	\delta = 0.
+\end{array}
+\right.
+\end{equation}
+
+Из этих выражений видно, что условия устойчивости метода прогонки (\ref{AppVarShuttleConditions}) выполнены.
+Как и в случае с одномерным уравнением, провести анализ устойчивости для~неравномерной сетки не представляется возможным.
+Однако, тестовые расчёты, результаты которых приведены в \ref{sec:pulses}, показали пригодность использования этой схемы
+для~решения параболического уравнения в цилиндрических координатах.
+

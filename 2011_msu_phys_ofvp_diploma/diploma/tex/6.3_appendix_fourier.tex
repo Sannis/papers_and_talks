@@ -1,0 +1,33 @@
+\subsection{Фурье-метод решения параболического уравнения}
+\label{subsec:AppFourier}
+
+<<Метод Фурье>> решения уравнений в частных производных основан на переходе к~Фурье-образу искомой функции.
+При этом в Фурье-представлении многократные производные переходят в умножение Фурье-образа на соответствующие спектральные переменные.
+Рассмотрим применение этого метода на пример двумерного уравнения дифракции:
+
+\begin{equation}\label{VarFourierNodim}
+    2i\dfrac{\partial E}{\partial z} = \dfrac{\partial^2 E}{\partial x^2} + \dfrac{\partial^2 E}{\partial y^2}
+\end{equation}
+
+Если воспользоваться Фурье-преобразованием
+
+\begin{eqnarray}
+        \hat{E}(k_x, k_y) & = & \dfrac{1}{2\pi}\iint E(x, y) \exp\left\{-i(k_x x + k_y y)\right\} dx dy, \\
+        E(x, y) & = & \dfrac{1}{2\pi}\iint \hat{E}(k_x, k_y) \exp\left\{+i(k_x x + k_y y)\right\} dk_x dk_y,
+\end{eqnarray}
+
+\noindent то уравнение (\ref{VarFourierNodim}) примет вид
+
+\begin{equation}\label{DiffractionFourier}
+    2i\frac{\partial \hat{E}(k_x, k_y, z)}{\partial z}= -(k_x^2 + k_y^2)\hat{E}(k_x, k_y, z)
+\end{equation}
+
+Оно имеет точное аналитическое решение, определяемое формулой
+
+\begin{equation}\label{DiffractionFourierSolve}
+    \hat{E}(k_x, k_y, z + \Delta z)= \hat{E}(k_x, k_y, z)\exp\left\{\dfrac{i}{2}(k_x^2 + k_y^2)\left|E(k_x, k_y, z)\right|^2\right\}
+\end{equation}
+
+После чего, применяя обратное преобразование Фурье к функции $E\left(k_x, k_y, z + \Delta z\right)$, получаем решение
+уравнения (\ref{VarFourierNodim}) на следующем шаге по $z$.
+
