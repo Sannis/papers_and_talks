@@ -1,0 +1,18 @@
+\section{Явная схема.}
+\begin{multline*}
+	2i\frac{\partial E}{\partial z}=\triangle_\perp E + R\left|E\right|^2E \\
+	{\hbox to 0.7cm{\rightarrowfill}}\quad
+	E_{i,j}^{(n+1)}=E_{i,j}^{(n)}+\frac{\Delta z}{2i}
+	\left(\frac{E_{i,j+1}^{(n)} + E_{i,j-1}^{(n)} + E_{i+1,j}^{(n)} + E_{i-1,j}^{(n)} - 
+	4E_{i,j}^{(n)}}{\Delta x^2} + R\left|E_{ij,}^{(n)}\right|^2E_{i,j}^{(n)}
+	\right)
+\end{multline*}
+
+\begin{itemize}
+	\item  Не используя метод расщепления по физическим факторам, реализовать приведенную 
+		выше явную схему.
+	\item Для численного интегрирования уравнения использовать метод Рунге-Кутта четвертого
+		порядка точности.
+	\item Использовать блочное распределение матрицы между процессами.
+\end{itemize}
+

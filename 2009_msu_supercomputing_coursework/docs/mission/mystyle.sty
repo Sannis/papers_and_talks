@@ -1,0 +1,32 @@
+\usepackage{cmap}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+\usepackage{amsmath,amsfonts,amssymb,amscd,textcomp,color,textcomp}
+
+\usepackage[colorlinks,urlcolor=blue,linkcolor=brown,pagecolor=brown,unicode,pdfstartview={FitH}]{hyperref}
+\usepackage[pdftex]{graphicx}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{brown}{rgb}{0.6,0,0}
+
+\usepackage{indentfirst}
+\itemsep=0pt
+\itemindent=0pt
+
+\frenchspacing
+\righthyphenmin=2
+
+\textwidth=17.5cm
+\oddsidemargin=-0.52cm
+\pagestyle{myheadings}
+\renewcommand{\@oddhead}{\raisebox{0pt}[\headheight][0pt]{\vbox{\hbox to\textwidth{Параллельное программирование\strut\hfil\thepage}\hrule}}}
+\renewcommand{\@oddfoot}{}
+\renewcommand{\@seccntformat}[1]{\csname the#1\endcsname.{\hspace{0.5em}}}
+
+\newcommand{\code}[1]{\texttt{\textsf{#1}}}
+\newcommand{\ZZZ}[1]{\textcolor{red}{#1}}
+\newcommand{\fftw}{\textbf{\textsf{\textit{FFT\textcolor{red}{W}}}}} 
+\newcommand{\note}[1]{\textit{\textcolor{gray}{#1}}}
+

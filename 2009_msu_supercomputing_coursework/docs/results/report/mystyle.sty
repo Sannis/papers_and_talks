@@ -1,0 +1,45 @@
+\usepackage{cmap}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+\usepackage{amsmath,amsfonts,amssymb,amscd,textcomp,color,textcomp}
+
+\usepackage[colorlinks,urlcolor=blue,linkcolor=brown,pagecolor=brown,citecolor=brown,unicode,pdfstartview={FitH}]{hyperref}
+\usepackage[pdftex]{graphicx}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{brown}{rgb}{0.6,0,0}
+
+\usepackage{indentfirst}
+\itemsep=0pt
+\itemindent=0pt
+
+\frenchspacing
+
+\righthyphenmin=2
+\binoppenalty=10000
+\relpenalty=10000
+\textwidth=16.5cm
+\oddsidemargin=0.48cm
+%\newcommand{\doublesign}[1]{#1\nobreak\discretionary{}{\hbox{\ensuremath{#1}}}{}}
+%\newcommand{\note}[1]{\textit{\textcolor{gray}{#1}}}
+
+\renewcommand{\@seccntformat}[1]{\csname the#1\endcsname.{\hspace{0.5em}}}
+
+\setlength\abovecaptionskip{1\p@}
+\setlength\belowcaptionskip{-20\p@}
+
+\def\capfigure{figure}
+\def\captable{table}
+\long\def\@makecaption#1#2{%
+    \vskip\abovecaptionskip
+        \ifx\@captype\capfigure
+            {\footnotesize #1.~#2}
+        \else
+            \centering
+            {\footnotesize #1.~#2}
+        \fi
+    \vskip\belowcaptionskip}
+
+\renewcommand{\@biblabel}[1]{#1.} 

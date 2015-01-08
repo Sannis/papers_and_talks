@@ -1,0 +1,104 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{mystyle}
+
+% For graphics/media
+\graphicspath{{../presentation/images}}
+\def\imagesdir{../presentation/images}
+\def\graphsdir{../graphs}
+
+\begin{document}
+
+    \hoffset=-2.54cm
+    \voffset=-2.54cm
+    \oddsidemargin=3.5cm
+    \textwidth=16.5cm
+    \topmargin=2.5cm
+    \headheight=0cm
+    \headsep=0cm
+    \textheight=24.7cm
+    	
+    \newpage
+
+    \thispagestyle{empty}
+
+	\begin{center}
+        \textbf{МОСКОВСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ \\ имени М.\,В. ЛОМОНОСОВА}\\
+        \vspace{0.4em}
+        \hrule
+
+        \vspace{3em}
+
+        \textit{
+                ФИЗИЧЕСКИЙ {} ФАКУЛЬТЕТ \\
+                \vspace{0.2em}
+                КАФЕДРА {} ОБЩЕЙ {} ФИЗИКИ {} И {} ВОЛНОВЫХ {} ПРОЦЕССОВ \\
+                \vspace{0.2em}
+                МЕЖДУНАРОДНЫЙ {} УЧЕБНО-НАУЧНЫЙ {} ЛАЗЕРНЫЙ {} ЦЕНТР \\
+                \vspace{0.2em}
+                НОЦ {} <<СУПЕРКОМПЬЮТЕРНЫЕ ТЕХНОЛОГИИ>> \\
+        }
+
+        \vspace{8em}
+
+        {\large Отчетная работа}
+        \vspace{2em}
+
+		{\Huge
+			\textbf{Обзор и сравнительный анализ параллельных численных алгоритмов решения нелинейного уравнения квазиоптики
+            \\
+			}
+		}
+	\end{center}
+
+    \vspace{8em}
+
+    \begin{flushright}
+        {\large
+			\textit{Дергачёв А.\,А.\\Ефимов О.\,В.\\Сметанина Е.\,О.\\}
+		}
+    \end{flushright}
+
+    \vfill
+
+    \hfil Москва, 2009 \hfil
+
+    \newpage
+
+	\tableofcontents
+
+	\input{0_common.tex}
+	\input{1_explicit_rk4.tex}
+	\input{2_fourier_fftw.tex}
+	\input{3_sweep.tex}
+	\input{4_results.tex}
+	\input{5_conclusions.tex}
+    \input{6_thanks.tex}
+
+	\begin{thebibliography}{99}
+	
+		\bibitem{FirstFilament}%
+		Пилипецкий Н.Ф., Рустамов А.Р.
+		Письма в ЖЭТФ, 2, 1965.
+
+		\bibitem{KandidovShlenovKosarevaReview2009}%
+		Кандидов В.П., Шлёнов С.А., Косарева О.Г.
+		\textit{Филаментация мощного фемтосекундного лазерного излучения},
+		Квантовая электроника, 39, 3, 2009.
+		
+		\bibitem{AkhmanovNikitin}%
+		Ахманов С.А., Никитин С.Ю.
+		\textit{Физическая оптика},
+		М., Наука, 2004.
+
+        \bibitem{fftw}%
+        \href{http://fftw.org}{http://fftw.org}
+
+        \bibitem{SweepScheme}%
+        V.P. Kandidov, V.Yu. Fedorov
+        \textit{Properties of self-focusing in elliptic beams},
+        Quantum Electronics, 34, 12, 2004.
+		
+	\end{thebibliography}
+
+\end{document}

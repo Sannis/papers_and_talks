@@ -1,0 +1,91 @@
+\section{Метод Фурье.}
+
+
+\subsection{Освоение \fftw.}
+
+\begin{itemize}
+	\item Разобраться с подключением {\fftw} в проект Visual Studio. Мануал по {\fftw} 2.1.3 есть на сайте \href{http://fftw.org}{fftw.org}.
+	\item Разобраться с распределением матрицы между процессами, необходимым для \fftw.
+	\item Разобраться с расположением результата одного фурье-преобразования и нормировкой.
+	\item Реализовать \code{fftw\_mpi(...)} туда-обратно при гауссовых начальных условиях в двумерном случае.
+\end{itemize}
+
+
+\subsection{Дифракция в линейной среде.}
+\begin{multline*}
+	\left\{
+	\begin{array}{rcl}
+		2i\dfrac{\partial E}{\partial{z}}&=&\dfrac{\partial^2 E}{\partial{x^2}}+
+		\dfrac{\partial^2 E}{\partial{y^2}}\\
+		E(x,y,0)&=&\exp\left\{-\dfrac{x^2+y^2}{2}\right\},\quad (x,y)\in[-l,l]^2
+	\end{array}
+	\right.
+	\quad{\hbox to 0.7cm{\rightarrowfill}}\\
+	{\hbox to 0.7cm{\rightarrowfill}}\quad
+	\Biggl[
+	E(x,y,z)=\sum\limits_{j,k}\tilde{E}_{jk}(z)\exp\left\{\dfrac{2\pi ijx}{N}\right\}
+	\exp\left\{\dfrac{2\pi iky}{N}\right\}
+	\Biggr]
+	\quad{\hbox to 0.7cm{\rightarrowfill}}\\
+	{\hbox to 0.7cm{\rightarrowfill}}\quad
+	\left\{
+	\begin{array}{rcl}
+		2i\dfrac{\partial\tilde E}{\partial{z}}&=&\left(\dfrac{2\pi i}{N}\right)^2(j^2+k^2)
+		\tilde E(z)\\
+		\tilde E_{jk}(0)&=&\tilde E^{(0)}
+	\end{array}
+	\right.
+	\quad{\hbox to 0.7cm{\rightarrowfill}}\\
+	{\hbox to 0.7cm{\rightarrowfill}}\quad
+	\tilde E_{jk}(z)=\tilde E^{(0)}\exp\left\{i\dfrac{2\pi^2}{N^2}(j^2+k^2)z\right\}
+\end{multline*}
+
+\begin{multline*}
+	\text{Итого:}\hspace{0.5cm}E(x,y,0)
+	\hspace{0.5cm}{\buildrel\hbox{2D FFT}\over{\hbox to 2cm{\rightarrowfill}}}
+	\hspace{0.5cm}\tilde E_{jk}(0)
+	\hspace{0.5cm}\hbox to 1cm{\rightarrowfill}\\
+	\hbox to 1cm{\rightarrowfill}
+	\hspace{0.5cm}\tilde E_{jk}(0)\exp\left\{i\dfrac{2\pi^2}{N^2}(j^2+k^2)z\right\}
+	\hspace{0.5cm}{\buildrel{\hbox{2D FFT}^{-1}}\over{\hbox to 2cm{\rightarrowfill}}}
+	\hspace{0.5cm}E(x,y,z)
+\end{multline*}
+
+\begin{itemize}
+	\item Реализовать параллельный расчет дифракции гауссового пучка.
+        \item Сравнить с аналитическим решением.
+        \item Исследовать зависимость времени счёта от следующих параметров:
+		\begin{itemize}
+			\item с буфером и без него;
+			\item \code{FFTW\_NORMAL\_ORDER} vs \code{FFTW\_TRANSPOSED\_ORDER};
+			\item (опционально) \code{FFTW\_ESTIMATE} vs \code{FFTW\_MEASURE};
+			\item (опционально) \code{wisdom}, OpenMP, ...
+		\end{itemize}
+	\item Выбрать оптимальные параметры для использования в следующем пункте.
+\end{itemize}
+
+
+\subsection{Дифракция в нелинейной среде.}
+\begin{equation*}
+	\left\{
+	\begin{array}{rcl}
+		2i\dfrac{\partial E}{\partial z}&=&R\left|E\right|^2E\\
+		E(x,y,0)&=&E_0(x,y)
+	\end{array}
+	\right.
+	\rightarrow
+	E(x,y,z)=E_0(x,y)\exp\left\{-i\dfrac{R\left|E_0(x,y)\right|^2}{2}z\right\}
+\end{equation*}
+
+\begin{itemize}
+	\item Выполнять шаг дифракции и шаг нелинейности в разном порядке:
+	\begin{enumerate}
+		\item <<дифракция "--- нелинейность>>
+		\item <<нелинейность "--- дифракция>>
+		\item чередовать
+	\end{enumerate}
+	\item Изменять шаг интегрирования для выполнения условия $\Delta\varphi_{\text{нл}}=\dfrac{R\left|E_{max}\right|^2}{2}\Delta z < 0.1$.
+	\item Использовать оптимальные параметры \fftw, найденные в предыдущем пункте.
+	\item Получить формулу Марбургера для гауссова пучка и ее аналог для $\ch^{-1}$ пучка.
+\end{itemize}
+

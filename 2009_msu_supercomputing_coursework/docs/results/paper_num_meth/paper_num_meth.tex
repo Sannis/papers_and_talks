@@ -1,0 +1,174 @@
+\documentclass[12pt,a4paper,twoside]{article}
+
+\usepackage{mystyle}
+
+\def\footnoteDergachev{A.\,A.~Dergachev,~dergachev88@yandex.ru}
+\def\footnoteEfimov{O.\,V.~Efimov,~efimovov@yandex.ru}
+\def\footnoteSmetanina{E.\,O.~Smetanina,~jannes-2002@yandex.ru}
+
+\begin{document}
+
+	\thispagestyle{empty}
+
+    % УДК: http://teacode.com/online/udc/
+    % 519.633: Дифференциальные уравнения второго порядка параболического и гиперболического типов
+    % 519.684: Программирование для специализированных вычислительных машин
+    % 519.688: Программы и алгоритмы для решения отдельных задач на вычислительных машинах
+    \noindent УДК 519.633:519.684:519.688
+
+    \noindent \textbf{ОБЗОР И СРАВНИТЕЛЬНЫЙ АНАЛИЗ ПАРАЛЛЕЛЬНЫХ ЧИСЛЕННЫХ АЛГОРИТМОВ РЕШЕНИЯ НЕЛИНЕЙНОГО УРАВНЕНИЯ ШРЁДИНГЕРА}
+
+	\vspace{1em}
+
+    \noindent \copyright \quad 2010 г. \quad \textbf{
+    	А.\,А.~Дергачёв\footnote[1]{\footnoteDergachev},
+    	О.\,В.~Ефимов\footnote[2]{\footnoteEfimov},
+    	Е.\,О.~Сметанина\footnote[3]{\footnoteSmetanina}
+   }
+
+	\vspace{0.5em}
+
+    \noindent Международный учебно-научный лазерный центр МГУ имени М.В. Ломоносова \\
+    119991, ГСП-1, Москва, Ленинские горы, 1, стр. 62.
+
+	\vspace{-3em}
+
+    \begin{abstract}
+        \noindent Рассматриваются параллельные численные методы решения нелинейного уравнения квазиоптики на основе разностных схем и быстрого преобразования Фурье.
+        Приводятся результаты исследования производительности рассматриваемых методов на суперкомпьютере СКИФ <<Чебышёв>> и кластере IBM BlueGene/P,
+        установленных в~Московском государственном университете имени М.\,В. Ломоносова.
+        Статья подготовлена по результатам обучения по специальной программе <<Суперкомпьютерные технологии>> и собственных исследований в рамках научной работы.
+        
+        \vspace{1em}
+        
+        \noindent Ключевые слова: параллельные алгоритмы, нелинейное уравнение Шрёдингера,
+        эффективность распараллеливания, метод прогонки, быстрое преобразование Фурье.
+        
+        \vspace{1em}
+        
+	    \noindent \textbf{REVIEW AND COMPARATIVE ANALYSIS OF PARALLEL NUMERICAL ALGORITHMS FOR NONLINEAR SCHRODINGER EQUATION SOLVING}
+		
+		\vspace{1em}
+		
+	    \noindent \textbf{A.\,A.~Dergachev\footnotemark[1],
+	    	O.\,V.~Efimov\footnotemark[2],
+	    	E.\,O.~Smetanina\footnotemark[3]
+	    }
+		
+        \vspace{1em}
+ 		
+        \noindent Рассматриваются параллельные численные методы решения нелинейного уравнения квазиоптики на основе разностных схем и быстрого преобразования Фурье.
+        Приводятся результаты исследования производительности рассматриваемых методов на суперкомпьютере СКИФ <<Чебышёв>> и кластере IBM BlueGene/P,
+        установленных в~Московском государственном университете имени М.\,В. Ломоносова.
+        Статья подготовлена по результатам обучения по специальной программе <<Суперкомпьютерные технологии>> и собственных исследований в рамках научной работы.
+        
+        \vspace{1em}
+        
+        \noindent Keywords: parallel algorithms, nonlinear Schrodinger equation,
+        parallelization efficiency, sweep method, fast Fourier transform.
+    \end{abstract}
+
+    %\hrule
+
+    \input{0_common.tex}
+
+    \input{1_explicit_rk4.tex}
+
+    \input{2_fourier_fftw.tex}
+
+    \input{3_sweep.tex}
+
+    \input{4_results.tex}
+
+    \input{5_conclusions.tex}
+
+    % Examples:
+    % \textit{Бахвалов Н.С., Жидков Н.П., Кобельков Г.М.} Численные методы. М.: Наука, 1987.
+    % Вычислительные методы линейной алгебры. Тр. I Всесоюзной конференции. Новосибирск: ВЦ СО АН СССР, 1969. 
+    % \textit{Зельдович Я.Б.} К теории распространения детонации в газообразных системах // Журн. экспер. и теор. физ. 1940. 10, вып. 5. 542-568. 
+    \begin{thebibliography}{99}
+        \bibitem{KandidovShlenovKosarevaReview2009}%
+        \textit{Кандидов В.П., Шлёнов С.А., Косарева О.Г.}
+        Филаментация мощного фемтосекундного лазерного излучения.
+        Квантовая электроника, 39, 3, 2009.
+
+        \bibitem{LadaginStarikov1998}%
+        \textit{Ладагин В.К., Стариков Ф.А.}
+        Численное решение квазиоптического уравнения для поперечной корреляционной функции поля излучения.
+        Математическое моделирование, 10, 8, 1998.
+
+        \bibitem{Agrawal2001}%
+        \textit{Agrawal G.P.}
+        Applications of Nonlinear Fiber Optics (3rd edition).
+        Elsevier Science, 2001.
+
+        \bibitem{Mahankov1983}%
+        \textit{Маханьков В.Г.}
+        Солитоны и численный эксперимент.
+        Физика элементраных частиц и атомного ядра, 14, 1, 1983.
+
+        \bibitem{VitkovskiyFedoruk2008}%
+        \textit{Витковский В.Э., Федорук М.П.}
+        Численное исследование свойств решений нелинейного уравнения Шредингера при распространении лазерных импульсов в световодах.
+        Вычислительные технологии, 13, 6, 2008.
+
+        \bibitem{Kadomcev1997}%
+        \textit{Кадомцев Б.Б., Кадомцев М.Б.}
+        Конденсаты Бозе-Эйнштейна.
+        УФН, 167, 6, 1997.
+
+        \bibitem{Belyaeva2005}%
+        \textit{Беляева Л.Т. и др.}
+        Динамика солитонов в модели нелинейного уравнения Шредингера с внешним гармоническим потенциалом.
+        Квантовая Электроника, 35, 9, 2005.
+
+        \bibitem{Kartvenko1993}%
+        \textit{Картавенко В.Г.}
+        Линейные и нелинейные возбуждения ядерной плотности.
+        Физика элементарных частиц и атомного ядра, 24, 6, 1993.
+
+        \bibitem{Zeytunyan1995}%
+        \textit{Зейтунян Р.Х.}
+        Нелинейные длинные волны на поверхности воды.
+        Успехи Физических Наук, 165, 12, 1995.
+
+        \bibitem{RK_Rado_Lobatto}%
+        \textit{Хайрер Э., Ваннер Г.}
+        Решение обыкновенных дифференциальных уравнений. Жёсткие и дифференциально-алгебраические задачи.
+        М., Мир, 1999, 685.
+
+        \bibitem{RK_Parallel_Houwen_2001}%
+        \textit{Houwen P.J., Sommeijer B.P.} Parallel ODE solver.
+        // Proceedings of the International Conference on Supercomputing.
+        2001, 71--81.
+
+        \bibitem{RK_Parallel_Jackson_2001}%
+        \textit{Jackson K.R., Norsett S.P.}
+        The potential for parallelism in Runge-Kutta methods.Part 1: R-K formulas in standard form.
+        SIAM J.Numer. Anal. 32, 2001, 49--82.
+
+        \bibitem{FFTW}%
+        http://fftw.org
+
+        \bibitem{FFTW2_Generator_99}% This paper describes the codelet generator introduced in FFTW 2
+        \textit{Matteo Frigo.} A fast Fourier transform compiler
+        // Proc. 1999 ACM SIGPLAN Conf. on Programming Language Design and Implementation.
+        1999. Vol. 34, num. 5, 169--180.
+
+        \bibitem{FFTW1_98}% This was the main paper describing FFTW 1
+        \textit{Matteo Frigo, Steven G. Johnson.} FFTW: An adaptive software architecture for the FFT
+        // Proc. 1998 IEEE Intl. Conf. Acoustics Speech and Signal Processing.
+        1998. Vol. 3, 1381--1384.
+
+        \bibitem{Kalitkin}%
+        \textit{Калиткин Н.Н.}
+        Численные методы.
+        М., Наука, 1978.
+
+        \bibitem{SweepScheme}%
+        \textit{V.P. Kandidov, V.Yu. Fedorov.}
+        Properties of self-focusing in elliptic beams.
+        Quantum Electronics, 34, 12, 2004.
+    \end{thebibliography}
+
+\end{document}

@@ -1,0 +1,28 @@
+    =====================================================
+    ===       Propagation: Diffraction and Kerr       ===
+    === FFT(using FFTW) + simple nonlinearity method  ===
+    =====================================================
+
+MPI grid size: 64 (1x64)
+
+Impulse parameters:
+    N: 16384
+    L: 10.000000
+
+Calculation parameters:
+    z_final: 1.000000
+    dz: 0.010000
+    R: 0.000000
+    dphi=0.5*R*dz: 0.000000  < 0.010000 => good :)
+
+FFTW options:
+    Buffer: yes
+    Do transpose: no
+    Do measure: no
+
+n        dz          z           I_max_exp(z)      I_max_theor(z)    P(z)
+00000    0.010000    0.000000    0.999999813713    1.000000000000    0.999999999996
+00100    0.010000    1.000000    0.499937565116    0.500000000000    0.999999999997
+
+Execution time(sec):
+681.022594

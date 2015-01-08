@@ -1,0 +1,41 @@
+# Ignore executable files
+*.e
+# Ignore objects and archives.
+*.[oa]
+# Ignore text editors backup files
+*~
+# Ignore result files*.
+*.bin
+*.dbl
+*.cpl
+*.gif
+# Ignore PBS files
+*.err
+*.out
+# Ignore Cleo (SKIF) files
+*.out-*
+*.rep-*
+machinefile-*
+.cleo-*
+.panfs.*
+# Ignore dependencies programs
+progs/*
+# Ignore results logs
+log.dat
+log.txt
+# Ignore LaTeX logs and result *.pdf
+*.aux
+*.log
+*.out
+*.toc
+*.nav
+*.snm
+*.dvi
+*.ps
+*.pdf
+# Ignore all results files
+*.dat
+*.png
+*.eps
+# Ignore backup files
+*.tar*

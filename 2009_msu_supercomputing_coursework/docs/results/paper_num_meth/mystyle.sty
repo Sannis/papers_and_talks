@@ -1,0 +1,69 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+%\hyphenation{им-пуль-сов, ко-ор-ди-нат}
+\hyphenation{nu-me-ri-cal}
+\hyphenation{effici-ency}
+\righthyphenmin=2
+\binoppenalty=10000
+\relpenalty=10000
+
+\usepackage{amsmath,amsfonts,amssymb,amscd,textcomp,color,textcomp}
+
+\usepackage{graphicx}
+
+\usepackage{indentfirst}
+\itemsep=0pt
+\itemindent=0pt
+
+\frenchspacing
+
+%\renewcommand{\baselinestretch}{1.5}
+\renewcommand{\baselinestretch}{1.0}
+\renewcommand{\footnotesize}{\fontsize{11}{11}\selectfont}
+
+% Page geometry
+\usepackage[a4paper, top=3.8cm, bottom=1.6cm, left=2.4cm, right=2.4cm]{geometry}
+% Page geometry [E]
+
+% Headings
+\pagestyle{myheadings}
+%\makeatletter
+% Head headings
+\renewcommand{\@oddhead}{\textit{Сравнение параллельных алгоритмов решения нелинейного уравнение Шредингера} \hfill \textbf{\thepage}}
+\renewcommand{\@evenhead}{\textbf{\thepage} \hfill \textit{\footnotesize А.\,А. Дергачёв, О.\,В. Ефимов, Е.\,О. Сметанина}}
+% Foot headings
+\renewcommand{\@oddfoot}{}
+\renewcommand{\@evenfoot}{}
+%\makeatother
+% Headings [E]
+
+\usepackage{abstract}
+\renewcommand{\abstracttextfont}{\footnotesize}
+
+\setlength\abovecaptionskip{1\p@}
+\setlength\belowcaptionskip{-20\p@}
+
+\def\capfigure{figure}
+\def\captable{table}
+\long\def\@makecaption#1#2{%
+    \vskip\abovecaptionskip
+        \ifx\@captype\capfigure
+            {\footnotesize #1.~#2}
+        \else
+            \centering
+            {\footnotesize #1.~#2}
+        \fi
+    \vskip\belowcaptionskip}
+    
+
+\addto\captionsrussian{\renewcommand*{\abstractname}{}}
+\addto\captionsrussian{\renewcommand*{\refname}{\normalsizeСПИСОК ЛИТЕРАТУРЫ}}
+
+\renewcommand{\@biblabel}[1]{#1.}
+
+% For graphics
+\def\imagesdir{./images}
+\def\graphsdir{../graphs_grayscale}
+
