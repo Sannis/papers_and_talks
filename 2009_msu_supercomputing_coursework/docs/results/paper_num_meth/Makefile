@@ -1,17 +1,13 @@
 
-all: images tex
+all: paper_num_meth.pdf
 
-images: ./images/sweep_method_forward.svg ./images/sweep_method_backward.svg
-	inkscape -z -D -E ./images/sweep_method_forward.eps ./images/sweep_method_forward.svg
-	inkscape -z -D -E ./images/sweep_method_backward.eps ./images/sweep_method_backward.svg
-
-	../graphs_grayscale/clean_eps_comments.sh images
-
-tex:
-	latex ./paper_num_meth.tex
-	latex ./paper_num_meth.tex # for references
-	dvips -P pdf ./paper_num_meth.dvi
-	ps2pdf ./paper_num_meth.ps
+paper_num_meth.pdf: paper_num_meth.tex mystyle.sty 0_common.tex 1_explicit_rk4.tex 2_fourier_fftw.tex 3_sweep.tex 4_results.tex 5_conclusions.tex
+	#latex ./paper_num_meth.tex
+	#latex ./paper_num_meth.tex # for references ;)
+	#dvips -P pdf ./paper_num_meth.dvi
+	#ps2pdf ./paper_num_meth.ps
+	pdflatex --shell-escape ./paper_num_meth.tex
+	pdflatex --shell-escape ./paper_num_meth.tex # for references ;)
 
 clean:
 	rm -f ./*.aux
@@ -19,5 +15,3 @@ clean:
 	rm -f ./*.out
 	rm -f ./*.dvi
 	rm -f ./*.ps
-	if [ -e "./paper_num_meth.pdf" ]; then mv ./paper_num_meth.pdf ./paper_num_meth.prev.`date +%Y%m%d.%H%M%S`.pdf; fi;
-
