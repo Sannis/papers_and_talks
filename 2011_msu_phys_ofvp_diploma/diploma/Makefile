@@ -21,7 +21,7 @@ diploma.bbl: diploma.bib
 
 diploma.pdf: diploma.tex tex/*.tex diploma.bbl diploma.sty
 	$(PDFLATEX) $(PDFLATEXFLAGS) diploma
-	$(PDFLATEX) $(PDFLATEXFLAGS) diploma
+	$(PDFLATEX) $(PDFLATEXFLAGS) diploma # for references ;)
 
 abstracts: abstract_ru.pdf abstract_en.pdf
 	rm -f $(CLEAN_LOGS)
@@ -36,4 +36,3 @@ abstract_en.pdf: abstract_en.tex diploma.sty
 clean:
 	rm -f $(CLEAN_ALL)
 	(cd tex/; rm -f $(CLEAN_LOGS))
-

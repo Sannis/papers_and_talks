@@ -15,7 +15,7 @@ slides: slides.pdf
 
 slides.pdf: *.tex *.sty
 	$(PDFLATEX) $(PDFLATEXFLAGS) slides
+	$(PDFLATEX) $(PDFLATEXFLAGS) slides # for references ;)
 
 clean:
 	rm -f $(CLEAN_ALL)
-
